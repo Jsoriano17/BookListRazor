@@ -26,6 +26,7 @@ namespace BookListRazor
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddRazorPages().AddRazorRuntimeCompilation();
 
             services.AddDbContext<BookListRazorContext>(options =>
                     options.UseSqlite(Configuration.GetConnectionString("BookListRazorContext")));
