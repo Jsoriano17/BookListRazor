@@ -23,5 +23,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Pages\BookList\Index.cshtml" />
+    <Content Remove="Pages\BookList\Create.cshtml" />
   </ItemGroup>
 </Project>
