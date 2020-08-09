@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BookListRazor.Model;
-using BookListRazor.Data;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using BookListRazor.Model;
+using BookListRazor.Data;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BookListRazor.Pages.BookList
 {
-    public class CreateModel : PageModel
+    public class EditModel : PageModel
     {
-        private readonly BookListRazorContext _db;
+        private BookListRazorContext _db;
 
-        public CreateModel(BookListRazorContext db)
+        public EditModel(BookListRazorContext db)
         {
             _db = db;
         }
@@ -21,20 +21,26 @@ namespace BookListRazor.Pages.BookList
         [BindProperty]
         public Book Book { get; set; }
 
-        public void OnGet()
+
+        public async Task OnGet(int id)
         {
+            Book = await _db.Book.FindAsync(id);
         }
 
         public async Task<IActionResult> OnPost()
         {
             if(ModelState.IsValid)
             {
-                await _db.Book.AddAsync(Book);
+                var BookFromDb = await _db.Book.FindAsync(Book.Id);
+                BookFromDb.Name = Book.Name;
+                BookFromDb.Author = Book.Author;
+                BookFromDb.ISBN = Book.ISBN;
                 await _db.SaveChangesAsync();
                 return RedirectToPage("Index");
+
             } else
             {
-                return Page();
+                return RedirectToPage();
             }
         }
     }
