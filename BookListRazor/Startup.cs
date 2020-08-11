@@ -27,7 +27,7 @@ namespace BookListRazor
         {
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
-
+            services.AddControllersWithViews();
             services.AddDbContext<BookListRazorContext>(options =>
                     options.UseSqlite(Configuration.GetConnectionString("BookListRazorContext")));
         }
@@ -55,6 +55,7 @@ namespace BookListRazor
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers(); 
                 endpoints.MapRazorPages();
             });
         }
